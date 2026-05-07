@@ -1,14 +1,544 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>First Page</title>
+    <title>朱卫杰 | 个人网页</title>
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #f5f5f5;
+            --accent-color: #e0e0e0;
+            --text-color: #333;
+            --spacing-unit: 1rem;
+            --font-main: 'Noto Serif SC', serif;
+            --font-secondary: 'Noto Sans SC', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-main);
+            color: var(--text-color);
+            background-color: var(--secondary-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+        }
+        
+        header {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: #000;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: #888;
+        }
+        
+        .hero {
+            height: 80vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .hero-text {
+            padding-right: 2rem;
+        }
+        
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero-text p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            font-family: var(--font-secondary);
+            font-weight: 300;
+        }
+        
+        .hero-images {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 1rem;
+            height: 100%;
+        }
+        
+        .hero-image {
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .hero-image:nth-child(1) {
+            grid-column: 1 / 2;
+            grid-row: 1 / 3;
+            background-image: url('澳大利亚悉尼的梦娜维尔岩池（Monavale Rock Pool）.jpg');
+        }
+        
+        .hero-image:nth-child(2) {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+            background-image: url('西班牙 米拉韦特村.jpg');
+        }
+        
+        .hero-image:nth-child(3) {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            background-image: url('内华达州Rhyolite 附近的山谷里有两头野驴.jpg');
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin: 4rem 0 2rem;
+            text-align: center;
+        }
+        
+        .resume-section {
+            padding: 4rem 0;
+            background-color: white;
+        }
+        
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .skill {
+            padding: 2rem;
+            background-color: var(--secondary-color);
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+        }
+        
+        .skill:hover {
+            transform: translateY(-5px);
+        }
+        
+        .skill h3 {
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+        
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .project {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+        
+        .project img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .project:hover img {
+            transform: scale(1.05);
+        }
+        
+        .project-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .project:hover .project-info {
+            transform: translateY(0);
+        }
+        
+        .project-info h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .courses-section {
+            padding: 4rem 0;
+        }
+        
+        .courses {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .course {
+            padding: 2rem;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .course:hover {
+            transform: translateY(-5px);
+        }
+        
+        .course h3 {
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+        
+        .course-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+        }
+        
+        .course:nth-child(1) .course-image {
+            background-image: url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .course:nth-child(2) .course-image {
+            background-image: url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .course:nth-child(3) .course-image {
+            background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .course:nth-child(4) .course-image {
+            background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: var(--font-secondary);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+            text-align: left;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section ul li a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: #ccc;
+        }
+        
+        .xiaohongshu-icon {
+            color: #ff2442;
+        }
+        
+        .xiaohongshu-icon:hover {
+            color: #ff6b80;
+        }
+        
+
+        
+        .copyright {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                height: auto;
+                padding: 2rem 0;
+            }
+            
+            .hero-text {
+                padding-right: 0;
+                text-align: center;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-images {
+                height: 60vh;
+            }
+            
+            nav {
+                display: none;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <h2>This is my first page</h2>
-    <script src="main.js"></script>
+    <div class="container">
+        <header>
+            <div class="logo">Adolphus</div>
+            <nav>
+                <ul>
+                    <li><a href="#about">关于我</a></li>
+                    <li><a href="#resume">专业简历</a></li>
+                    <li><a href="#courses">精品课程</a></li>
+                    <li><a href="#contact">联系我</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <section class="hero" id="about">
+            <div class="hero-text">
+                <h1>朱卫杰的<br>创意空间</h1>
+                <p>我是一名充满热情的学生兼博主，致力于分享知识与经验，帮助他人成长。通过这个平台，我展示我的专业技能和创意课程，希望能为您带来价值。</p>
+                <a href="#resume" class="btn">了解更多</a>
+            </div>
+            <div class="hero-images">
+                <div class="hero-image"></div>
+                <div class="hero-image"></div>
+                <div class="hero-image"></div>
+            </div>
+        </section>
+    </div>
+    
+    <section class="resume-section" id="resume">
+        <div class="container">
+            <h2 class="section-title">专业简历</h2>
+            
+            <div class="skills">
+                <div class="skill">
+                    <h3>技术能力</h3>
+                    <p>精通前端开发技术，包括HTML5、CSS3和JavaScript。熟悉React、Vue等现代前端框架，能够独立开发响应式网站和Web应用。</p>
+                </div>
+                <div class="skill">
+                    <h3>内容创作</h3>
+                    <p>擅长教育内容创作，包括文章撰写、视频制作和在线课程设计。注重内容的实用性和可操作性，帮助学习者快速掌握技能。</p>
+                </div>
+                <div class="skill">
+                    <h3>项目管理</h3>
+                    <p>具备优秀的项目管理能力，能够高效组织和协调资源，确保项目按时高质量完成。熟悉敏捷开发方法论。</p>
+                </div>
+            </div>
+            
+            <h3 class="section-title" style="font-size: 1.8rem;">项目经验</h3>
+            
+            <div class="projects">
+                <div class="project">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="项目一">
+                    <div class="project-info">
+                        <h3>在线学习平台</h3>
+                        <p>使用React和Node.js开发的在线教育平台，支持课程发布、学习追踪和互动讨论。</p>
+                    </div>
+                </div>
+                <div class="project">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="项目二">
+                    <div class="project-info">
+                        <h3>社区论坛系统</h3>
+                        <p>基于Vue和Express构建的社区论坛，实现了用户认证、内容管理和实时通讯功能。</p>
+                    </div>
+                </div>
+                <div class="project">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="项目三">
+                    <div class="project-info">
+                        <h3>数据可视化工具</h3>
+                        <p>使用D3.js和TypeScript开发的数据可视化工具，帮助用户直观理解复杂数据集。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="courses-section" id="courses">
+        <div class="container">
+            <h2 class="section-title">精品课程</h2>
+            
+            <div class="courses">
+                <div class="course">
+                    <div class="course-image"></div>
+                    <h3>论文写作</h3>
+                    <p>从选题到发表，全面指导学术论文写作流程。掌握研究方法、文献综述、数据分析和学术写作技巧。</p>
+                    <a href="#" class="btn">了解详情</a>
+                </div>
+                <div class="course">
+                    <div class="course-image"></div>
+                    <h3>英语学习</h3>
+                    <p>科学高效的英语学习方法，从听说读写全方位提升语言能力。针对不同水平和需求定制学习计划。</p>
+                    <a href="#" class="btn">了解详情</a>
+                </div>
+                <div class="course">
+                    <div class="course-image"></div>
+                    <h3>留学申请DIY</h3>
+                    <p>从院校选择到文书准备，从面试技巧到签证申请，全方位指导留学申请过程，提高录取成功率。</p>
+                    <a href="#" class="btn">了解详情</a>
+                </div>
+                <div class="course">
+                    <div class="course-image"></div>
+                    <h3>小红书运营</h3>
+                    <p>从账号定位到内容创作，从数据分析到变现方式，系统学习小红书平台运营和个人IP打造。</p>
+                    <a href="#" class="btn">了解详情</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我</h3>
+                    <p>我是一名学生兼博主，致力于分享知识和经验，帮助他人成长。无论是技术领域还是内容创作，我都追求卓越和创新。</p>
+                </div>
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="#about">关于我</a></li>
+                        <li><a href="#resume">专业简历</a></li>
+                        <li><a href="#courses">精品课程</a></li>
+                        <li><a href="#contact">联系我</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <p>邮箱：ericzhu0827@outlook.com</p>
+                    <p>电话：+86 173 4327 2051</p>
+                    <div class="social-links">
+                        <a href="https://github.com/Adolphus0alien" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-zhihu"></i></a>
+                        <a href="https://www.xiaohongshu.com/user/profile/65a09a9a000000002200922d" title="小红书" class="xiaohongshu-icon"><i class="fas fa-book-open"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Adolphus. 保留所有权利。
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
-</html>
+</html> 
